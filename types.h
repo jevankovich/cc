@@ -3,36 +3,104 @@
 #include "common.h"
 
 enum token {
-	IDENT, // Any string beginning with an _ or a letter
-	NUMERAL, // Any string beginning with a numeral
-	// The following tokens are single characters
+	// Reserved words
+	AUTO,
+	BREAK,
+	CASE,
+	CHAR,
+	CONST,
+	CONTINUE,
+	DEFAULT,
+	DO,
+	DOUBLE,
+	ELSE,
+	ENUM,
+	EXTERN,
+	FLOAT,
+	FOR,
+	GOTO,
+	IF,
+	INT,
+	LONG,
+	REGISTER,
+	RETURN,
+	SHORT,
+	SIGNED,
+	SIZEOF,
+	STATIC,
+	STRUCT,
+	SWITCH,
+	TYPEDEF,
+	UNION,
+	UNSIGNED,
+	VOID,
+	VOLATILE,
+	WHILE,
+	// Operators
+	DOT, // .
 	TILDE, // ~
 	EXCLAMATION, // !
 	PERCENT, // %
+	PERCENT_EQUAL, // %=
 	CARET, // ^
+	CARET_EQUAL, // ^=
 	AMPERSAND, // & 
+	AMP_AMP, // &&
+	AMP_EQUAL, // &=
+	PIPE, // |
+	PIPEPIPE, // ||
+	PIPE_EQUAL, // |=
 	ASTERISK, // * 
+	ASTERISK_EQUAL, // *=
 	LPAREN, // (
 	RPAREN, // ) 
+	LBRACK, // [
+	RBRACK, // ]
+	LBRACE, // {
+	RBRACE, // }
 	MINUS, // - 
+	MINUS_MINUS, // --
+	MINUS_EQUAL, // -=
 	PLUS, // +
+	PLUS_PLUS, // ++
+	PLUS_EQUAL, // +=
 	EQUALS, // =
+	EQUAL_EQUAL, // ==
+	NEQUAL, // !=
 	COLON, // :
 	SEMICOLON, // ;
 	SINGLE_QUOTE, // '
 	DOUBLE_QUOTE, // "
 	COMMA, // ,
 	LESS_THAN, // < 
+	LESS_LESS, // <<
+	LESS_EQUAL, // <=
+	LESS_LESS_EQUAL, // <<=
 	GREATER_THAN, // >
+	GREAT_GREAT, // >>
+	GREATER_EQUAL, // >=
+	GREAT_GREAT_EQUAL, // >>=
+	ARROW, // ->
 	SLASH, // /
+	SLASH_SLASH, // //
+	SLASH_EQUAL, // /=
 	QUESTION_MARK, // ?
+	// Non-reserved words
+	IDENT, // Any string, beginning with an _ or a letter, that isn't reserved
+	NUMERAL, // Any string beginning with a numeral
 };
 
 struct set_entry {
-	uint64_t hash;
 	char *str;
 };
 
+/*
+ * strset is a hash based set.
+ * strset cannot be removed from. Strings can only be added.
+ * When doing a lookup, an index or -1 is returned. The index can be used to
+ * index into a table to implement a map. -1 indicates the value searched for
+ * is not in the set.
+ */
 struct strset {
 	// TODO: Implement this
 	// Should have a private heap for strings
